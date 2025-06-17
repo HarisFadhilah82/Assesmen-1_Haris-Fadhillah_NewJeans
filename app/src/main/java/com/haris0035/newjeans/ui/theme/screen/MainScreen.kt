@@ -19,6 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.TextFieldDefaults
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -49,11 +54,16 @@ fun MainScreen() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
     var harga by remember { mutableStateOf("") }
     var biaya by remember { mutableStateOf("") }
     var hotel by remember { mutableStateOf("") }
+
+    var expanded by remember { mutableStateOf(false) }
+    val options = (1..10).map { it.toString() }
+    var selectedOption by remember { mutableStateOf(options.first()) }
 
     Column(
         modifier = modifier
@@ -70,7 +80,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             value = harga,
             onValueChange = { harga = it },
             label = { Text(text = stringResource(R.string.harga)) },
-            trailingIcon = { Text(text = "kg") },
+            trailingIcon = { Text(text = "Rp") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -80,9 +90,9 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         )
         OutlinedTextField(
             value = biaya,
-            onValueChange = { harga = it },
+            onValueChange = { biaya = it },
             label = { Text(text = stringResource(R.string.biaya)) },
-            trailingIcon = { Text(text = "kg") },
+            trailingIcon = { Text(text = "Rp") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -92,9 +102,9 @@ fun ScreenContent(modifier: Modifier = Modifier) {
         )
         OutlinedTextField(
             value = hotel,
-            onValueChange = { harga = it },
+            onValueChange = { hotel = it },
             label = { Text(text = stringResource(R.string.hotel)) },
-            trailingIcon = { Text(text = "kg") },
+            trailingIcon = { Text(text = "Rp/Malam") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -102,8 +112,43 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             ),
             modifier = Modifier.fillMaxWidth()
         )
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            OutlinedTextField(
+                readOnly = true,
+                value = selectedOption,
+                onValueChange = {},
+                label = { Text("Jumlah Orang") },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(),
+                colors = TextFieldDefaults.outlinedTextFieldColors()
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                options.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOption = selectionOption
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
     }
 }
+
 
 
 @Preview(showBackground = true)
