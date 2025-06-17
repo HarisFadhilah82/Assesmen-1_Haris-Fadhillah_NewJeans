@@ -1,14 +1,18 @@
 package com.haris0035.newjeans.ui.theme.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -31,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -56,7 +61,7 @@ fun MainScreen(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 actions = {
-                    IconButton(onClick = {navController.navigate(Screen.About.route) }) {
+                    IconButton(onClick = { navController.navigate(Screen.About.route) }) {
                         Icon(
                             imageVector = Icons.Outlined.Info,
                             contentDescription = stringResource(R.string.tentang_aplikasi),
@@ -88,6 +93,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     var isHargaError by rememberSaveable { mutableStateOf(false) }
     var isBiayaError by rememberSaveable { mutableStateOf(false) }
     var isHotelError by rememberSaveable { mutableStateOf(false) }
+
+    val context = LocalContext.current
 
     Column(
         modifier = modifier
@@ -195,7 +202,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             }
         }
 
-        androidx.compose.material3.Button(
+            Button(
             onClick = {
                 val hrg = harga.toDoubleOrNull()
                 val trp = biaya.toDoubleOrNull()
@@ -227,6 +234,29 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
+        Button(
+            onClick = {
+                totalBiaya?.let {
+                    val message = context.getString(R.string.bagikan_template, it.toInt())
+                    shareData(context, message)
+                }
+            },
+            enabled = totalBiaya != null,
+            modifier = Modifier.padding(top = 8.dp),
+            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+        ) {
+            Text(text = stringResource(R.string.bagikan))
+        }
+
+    }
+}
+private fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(shareIntent)
     }
 }
 

@@ -9,5 +9,7 @@
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="copyright">NewJeans merupakan aplikasi penghitung sederhana untuk menghitung biaya estimasi jika kita akan membeli tiket konser beserta keperluan lainnya  seperti baiaya penginapan dan transportasi</string>
     <string name="kembali">kembali</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">Estimasi Untuk memnonton konser newjeans yang saya hitung yaitu Rp %1$d</string>
 </resources>
 
