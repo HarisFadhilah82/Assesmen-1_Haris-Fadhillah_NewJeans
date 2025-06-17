@@ -65,6 +65,8 @@ fun ScreenContent(modifier: Modifier = Modifier) {
     val options = (1..10).map { it.toString() }
     var selectedOption by remember { mutableStateOf(options.first()) }
 
+    var totalBiaya by remember { mutableStateOf<Double?>(null) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -76,6 +78,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth()
         )
+
         OutlinedTextField(
             value = harga,
             onValueChange = { harga = it },
@@ -88,6 +91,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             ),
             modifier = Modifier.fillMaxWidth()
         )
+
         OutlinedTextField(
             value = biaya,
             onValueChange = { biaya = it },
@@ -100,6 +104,7 @@ fun ScreenContent(modifier: Modifier = Modifier) {
             ),
             modifier = Modifier.fillMaxWidth()
         )
+
         OutlinedTextField(
             value = hotel,
             onValueChange = { hotel = it },
@@ -146,8 +151,32 @@ fun ScreenContent(modifier: Modifier = Modifier) {
                 }
             }
         }
+
+        androidx.compose.material3.Button(
+            onClick = {
+                val hrg = harga.toDoubleOrNull() ?: 0.0
+                val trp = biaya.toDoubleOrNull() ?: 0.0
+                val htl = hotel.toDoubleOrNull() ?: 0.0
+                val orang = selectedOption.toIntOrNull() ?: 1
+
+                val total = (hrg + trp + htl) * orang
+                totalBiaya = total
+            },
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text("Hitung")
+        }
+
+        totalBiaya?.let {
+            Text(
+                text = "Total estimasi biaya: Rp ${"%,.0f".format(it)}",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+        }
     }
 }
+
 
 
 
