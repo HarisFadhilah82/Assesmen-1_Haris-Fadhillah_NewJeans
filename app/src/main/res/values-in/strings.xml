@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NewJeans</string>
     <string name="intro"> New Jeans merupakan grup Girl Band asal dari korea yang sedang hits di zaman ini, mereka memiliki jumlah fans yang sangat banyak dari berabgai penjuru dunia.</string>
@@ -10,4 +11,3 @@
     <string name="copyright">NewJeans merupakan aplikasi penghitung sederhana untuk menghitung biaya estimasi jika kita akan membeli tiket konser beserta keperluan lainnya  seperti baiaya penginapan dan transportasi</string>
     <string name="kembali">kembali</string>
 </resources>
-
