@@ -27,6 +27,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.saveable.rememberSaveable
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,19 +75,19 @@ fun MainScreen(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenContent(modifier: Modifier = Modifier) {
-    var harga by remember { mutableStateOf("") }
-    var biaya by remember { mutableStateOf("") }
-    var hotel by remember { mutableStateOf("") }
+    var harga by rememberSaveable { mutableStateOf("") }
+    var biaya by rememberSaveable { mutableStateOf("") }
+    var hotel by rememberSaveable { mutableStateOf("") }
 
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
     val options = (1..10).map { it.toString() }
-    var selectedOption by remember { mutableStateOf(options.first()) }
+    var selectedOption by rememberSaveable { mutableStateOf(options.first()) }
 
     var totalBiaya by remember { mutableStateOf<Double?>(null) }
 
-    var isHargaError by remember { mutableStateOf(false) }
-    var isBiayaError by remember { mutableStateOf(false) }
-    var isHotelError by remember { mutableStateOf(false) }
+    var isHargaError by rememberSaveable { mutableStateOf(false) }
+    var isBiayaError by rememberSaveable { mutableStateOf(false) }
+    var isHotelError by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier
