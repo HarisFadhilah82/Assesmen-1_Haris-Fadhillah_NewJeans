@@ -5,6 +5,7 @@
     <string name="biaya">Biaya Transportasi</string>
     <string name="hotel">Biaya Penginapan</string>
     <string name="orang">Jumlah Orang</string>
+    <string name="input_invalid">Tidak Boleh Kosong</string>
 
 </resources>
 
