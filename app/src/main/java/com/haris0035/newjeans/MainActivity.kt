@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.haris0035.newjeans.navigation.SetupNavGraph
 import com.haris0035.newjeans.ui.theme.NewJeansTheme
 import com.haris0035.newjeans.ui.theme.screen.MainScreen
 
@@ -13,8 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NewJeansTheme {
-                MainScreen()
-
+                SetupNavGraph()
             }
         }
     }
